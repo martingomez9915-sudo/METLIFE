@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MetLife – Protector de Patrimonio | Martín Gómez</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:#0a1628; --navy-mid:#122040;
+      --gold:#c9a84c; --gold-light:#e8c97a;
+      --cream:#f6f2eb; --white:#ffffff;
+      --text-dark:#1a1a2e; --text-muted:#6b7280;
+      --border:rgba(201,168,76,0.25);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Montserrat',sans-serif;background:var(--cream);color:var(--text-dark);min-height:100vh;}
+
+    /* HEADER */
+    header{background:var(--navy);padding:28px 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--gold);}
+    .logo-area{display:flex;align-items:center;gap:18px;}
+    .logo-badge{width:52px;height:52px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--navy-mid),var(--navy));}
+    .logo-badge svg{width:28px;height:28px;fill:var(--gold);}
+    .logo-text h1{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--white);letter-spacing:.04em;}
+    .logo-text p{font-size:10px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-top:2px;}
+    .header-right{text-align:right;}
+    .header-right p{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);}
+    .header-right span{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--gold-light);display:block;margin-top:3px;}
+
+    /* MAIN */
+    main{max-width:900px;margin:48px auto;padding:0 24px;}
+    .page-title{text-align:center;margin-bottom:48px;}
+    .page-title h2{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--navy);}
+    .page-title p{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-top:8px;}
+    .divider{width:64px;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:16px auto;}
+
+    /* CARD */
+    .card{background:var(--white);border-radius:4px;border:1px solid var(--border);padding:36px 40px;margin-bottom:28px;box-shadow:0 4px 24px rgba(10,22,40,.06);position:relative;}
+    .card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(to bottom,var(--gold),transparent);border-radius:4px 0 0 4px;}
+    .card-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--navy);margin-bottom:24px;display:flex;align-items:center;gap:10px;}
+    .card-title .step{width:28px;height:28px;border-radius:50%;background:var(--navy);color:var(--gold);font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 28px;}
+    .field{display:flex;flex-direction:column;gap:6px;}
+    .field.full{grid-column:1/-1;}
+    label{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);}
+    input,textarea{font-family:'Montserrat',sans-serif;font-size:14px;color:var(--text-dark);background:var(--cream);border:1px solid rgba(10,22,40,.15);border-radius:3px;padding:10px 14px;outline:none;width:100%;transition:border-color .2s,box-shadow .2s;}
+    input:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12);background:var(--white);}
+    textarea{resize:vertical;min-height:80px;}
+
+    /* BUTTONS */
+    .btn-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .btn{padding:16px 24px;border:none;border-radius:3px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .25s;}
+    .btn-primary{background:linear-gradient(135deg,var(--navy-mid),var(--navy));color:var(--gold-light);border:1px solid var(--gold);}
+    .btn-primary:hover{box-shadow:0 6px 24px rgba(10,22,40,.3);transform:translateY(-1px);}
+    .btn-secondary{background:var(--white);color:var(--navy);border:1px solid var(--gold);}
+    .btn-secondary:hover{background:var(--cream);transform:translateY(-1px);}
+    .btn:active{transform:translateY(0)!important;}
+
+    /* NOTICE */
+    .notice{margin-top:16px;padding:16px 20px;border-radius:4px;font-size:12px;font-weight:500;line-height:1.7;display:none;}
+    .notice.success{background:#e6f4ea;color:#1a6633;border:1px solid #a8d5b5;display:block;}
+    .notice.error{background:#fdecea;color:#8c1a1a;border:1px solid #f5b8b8;display:block;}
+    .notice.info{background:#e8f4fd;color:#0a4a7c;border:1px solid #9ecfef;display:block;}
+    .notice strong{display:block;margin-bottom:4px;font-size:13px;}
+    .steps-list{margin-top:8px;padding-left:0;list-style:none;}
+    .steps-list li{padding:4px 0;display:flex;align-items:flex-start;gap:8px;}
+    .steps-list li::before{content:'';display:inline-block;width:20px;height:20px;border-radius:50%;background:var(--navy);color:var(--gold);font-size:10px;font-weight:700;text-align:center;line-height:20px;flex-shrink:0;}
+    .steps-list li:nth-child(1)::before{content:'1';}
+    .steps-list li:nth-child(2)::before{content:'2';}
+    .steps-list li:nth-child(3)::before{content:'3';}
+
+    /* REPORT */
+    #reporte-container{display:none;margin-bottom:48px;}
+    .report-header{background:var(--navy);padding:40px;border-radius:4px 4px 0 0;position:relative;}
+    .report-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(to right,transparent,var(--gold),transparent);}
+    .report-header-meta{display:flex;justify-content:space-between;align-items:flex-start;}
+    .report-header h3{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--white);font-weight:600;}
+    .report-header .subtitle{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-top:6px;}
+    .report-meta-right{text-align:right;}
+    .report-meta-right p{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);}
+    .report-meta-right span{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--gold-light);display:block;margin-top:4px;}
+    .report-body{background:var(--white);border:1px solid var(--border);border-top:none;border-radius:0 0 4px 4px;padding:40px;}
+    .report-section-title{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--navy);letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+    .report-section-title::before{content:'';width:12px;height:2px;background:var(--gold);display:inline-block;}
+    .info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(10,22,40,.05);font-size:13px;}
+    .info-label{color:var(--text-muted);font-weight:500;}
+    .info-value{font-weight:600;color:var(--navy);text-align:right;}
+    .projection-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:4px;}
+    .projection-card{background:var(--cream);border:1px solid var(--border);border-radius:4px;padding:20px 24px;}
+    .projection-card h4{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:600;color:var(--navy);margin-bottom:14px;}
+    .projection-card h4 span{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:.1em;color:var(--gold);display:block;margin-top:3px;}
+    .proj-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px dashed rgba(10,22,40,.1);font-size:12px;}
+    .proj-row:last-child{border-bottom:none;}
+    .proj-row .yr{color:var(--text-muted);font-weight:500;}
+    .proj-row .val{font-weight:700;color:var(--navy);}
+    .patrimonio-total{margin-top:28px;background:linear-gradient(135deg,var(--navy-mid),var(--navy));border-radius:4px;padding:28px 32px;display:flex;justify-content:space-between;align-items:center;border:1px solid var(--gold);}
+    .patrimonio-total .label-pt{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);}
+    .patrimonio-total .label-pt strong{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--white);font-weight:500;display:block;margin-top:4px;}
+    .patrimonio-total .value-pt{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--gold-light);text-align:right;}
+    .report-footer{margin-top:32px;padding-top:20px;border-top:1px solid var(--border);font-size:10px;color:var(--text-muted);line-height:1.7;}
+    .signature-block{margin-top:24px;display:flex;justify-content:flex-end;}
+    .sig-line{text-align:center;width:200px;}
+    .sig-line hr{border:none;border-top:1px solid var(--navy);margin-bottom:6px;}
+    .sig-line p{font-size:11px;font-weight:600;color:var(--navy);}
+    .sig-line span{font-size:9px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;}
+
+    @media(max-width:640px){
+      header{padding:20px 24px;}
+      .form-grid,.btn-row{grid-template-columns:1fr;}
+      .projection-grid{grid-template-columns:1fr;}
+      .patrimonio-total{flex-direction:column;gap:12px;text-align:center;}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-area">
+    <div class="logo-badge">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18L20 8.5v7l-8 4-8-4v-7l8-4.32z"/></svg>
+    </div>
+    <div class="logo-text">
+      <h1>MetLife</h1>
+      <p>Protección · Patrimonio · Futuro</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <p>Asesor Especialista</p>
+    <span>Martín Gómez</span>
+  </div>
+</header>
+
+<main>
+  <div class="page-title">
+    <h2>Análisis de Protección Patrimonial</h2>
+    <div class="divider"></div>
+    <p>Herramienta Profesional MetLife · Uso Exclusivo del Asesor</p>
+  </div>
+
+  <div class="card">
+    <p class="card-title"><span class="step">I</span> Identificación del Cliente</p>
+    <div class="form-grid">
+      <div class="field"><label>Nombre Completo</label><input type="text" id="nombre" placeholder="Nombre y apellidos del cliente"/></div>
+      <div class="field"><label>Número de Cédula</label><input type="text" id="cedula" placeholder="Documento de identidad"/></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-title"><span class="step">II</span> Diagnóstico Financiero — Árbol Patrimonial</p>
+    <div class="form-grid">
+      <div class="field"><label>Raíces · Ingresos Mensuales (COP)</label><input type="number" id="ingresos" placeholder="Ej: 5000000"/></div>
+      <div class="field"><label>Matas · Patrimonio Actual (COP)</label><input type="number" id="patrimonio" placeholder="Ej: 100000000"/></div>
+      <div class="field full"><label>Tronco · Actividades, Pasiones &amp; Estilo de Vida</label><textarea id="hobbies" placeholder="Describa las actividades, hobbies y aspiraciones del cliente…"></textarea></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-title"><span class="step">III</span> Configuración de Bolsillos de Inversión</p>
+    <div class="form-grid">
+      <div class="field"><label>Bolsillo I · Interés Compuesto — Aporte Mensual (COP)</label><input type="number" id="bolsillo1" placeholder="Ej: 500000"/></div>
+      <div class="field"><label>Bolsillo II · SP500 / ETF — Aporte Mensual (COP)</label><input type="number" id="bolsillo2" placeholder="Ej: 500000"/></div>
+      <div class="field"><label>Rentabilidad Anual Esperada SP500/ETF (%)</label><input type="number" id="rentabilidad" placeholder="Ej: 16"/></div>
+    </div>
+  </div>
+
+  <div class="card" style="padding:28px 40px;">
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="generarInforme()">
+        <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+        Generar Informe
+      </button>
+      <button class="btn btn-secondary" onclick="enviarCorreo()" id="btn-enviar" style="display:none;">
+        <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Enviar por Correo
+      </button>
+    </div>
+    <div id="notice" class="notice"></div>
+  </div>
+
+  <!-- REPORTE VISUAL -->
+  <div id="reporte-container">
+    <div class="report-header">
+      <div class="report-header-meta">
+        <div>
+          <h3 id="rpt-nombre">—</h3>
+          <p class="subtitle">Informe de Proyección Patrimonial · MetLife Colombia</p>
+        </div>
+        <div class="report-meta-right">
+          <p>Fecha de emisión</p><span id="rpt-fecha">—</span>
+          <p style="margin-top:10px;">Documento de referencia</p><span id="rpt-cedula">—</span>
+        </div>
+      </div>
+    </div>
+    <div class="report-body">
+      <p class="report-section-title">Perfil Financiero del Cliente</p>
+      <div id="rpt-info-rows"></div>
+      <p class="report-section-title" style="margin-top:32px;">Proyecciones de Inversión</p>
+      <div class="projection-grid">
+        <div class="projection-card">
+          <h4>Bolsillo I · Interés Compuesto<span>Tasa anual fija: 8%</span></h4>
+          <div class="proj-row"><span class="yr">A 20 años</span><span class="val" id="b1-20">—</span></div>
+          <div class="proj-row"><span class="yr">A 30 años</span><span class="val" id="b1-30">—</span></div>
+          <div class="proj-row"><span class="yr">A 45 años</span><span class="val" id="b1-45">—</span></div>
+        </div>
+        <div class="projection-card">
+          <h4>Bolsillo II · SP500 / ETF<span id="b2-label-title">—</span></h4>
+          <div class="proj-row"><span class="yr">A 20 años</span><span class="val" id="b2-20">—</span></div>
+          <div class="proj-row"><span class="yr">A 30 años</span><span class="val" id="b2-30">—</span></div>
+          <div class="proj-row"><span class="yr">A 45 años</span><span class="val" id="b2-45">—</span></div>
+        </div>
+      </div>
+      <div class="patrimonio-total">
+        <div class="label-pt">Patrimonio Total Estimado a los 62 Años<strong id="rpt-nombre-small">—</strong></div>
+        <div class="value-pt" id="rpt-total">COP —</div>
+      </div>
+      <div class="report-footer">
+        <strong>Aviso Legal:</strong> Los valores presentados son proyecciones estimativas con fines ilustrativos y no constituyen garantía de rendimiento futuro. Las rentabilidades históricas no garantizan resultados futuros. Documento elaborado por Martín Gómez, Protector de Patrimonio certificado por MetLife Colombia.
+      </div>
+      <div class="signature-block">
+        <div class="sig-line"><hr/><p>Martín Gómez</p><span>Protector de Patrimonio · MetLife</span></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  /* ─── datos del informe guardados globalmente ─── */
+  var _informe = null;
+
+  function cop(n){ return "COP "+Math.round(n).toLocaleString('es-CO'); }
+  function calcFV(a,r,y){ var m=y*12,rm=Math.pow(1+r,1/12)-1; return a*(Math.pow(1+rm,m)-1)/rm; }
+  function pad2(n){ return String(n).padStart(2,'0'); }
+
+  /* ═══════════════════════════════════════════════
+     1.  GENERAR INFORME (visual en pantalla)
+  ═══════════════════════════════════════════════ */
+  function generarInforme(){
+    var nombre     = document.getElementById('nombre').value.trim();
+    var cedula     = document.getElementById('cedula').value.trim();
+    var ingresos   = parseFloat(document.getElementById('ingresos').value)   ||0;
+    var hobbies    = document.getElementById('hobbies').value.trim();
+    var patrimonio = parseFloat(document.getElementById('patrimonio').value) ||0;
+    var aporte1    = parseFloat(document.getElementById('bolsillo1').value)  ||0;
+    var aporte2    = parseFloat(document.getElementById('bolsillo2').value)  ||0;
+    var rent       = (parseFloat(document.getElementById('rentabilidad').value)||16)/100;
+
+    if(!nombre||!cedula){ mostrarNotice("Por favor complete el nombre y la cédula del cliente.","error"); return; }
+
+    var hoy=new Date();
+    var fecha=pad2(hoy.getDate())+"/"+pad2(hoy.getMonth()+1)+"/"+hoy.getFullYear();
+    var hora=pad2(hoy.getHours())+":"+pad2(hoy.getMinutes());
+    var rentPct=(rent*100).toFixed(1);
+
+    var b1_20=calcFV(aporte1,0.08,20), b1_30=calcFV(aporte1,0.08,30), b1_45=calcFV(aporte1,0.08,45);
+    var b2_20=calcFV(aporte2,rent,20), b2_30=calcFV(aporte2,rent,30), b2_45=calcFV(aporte2,rent,45);
+    var total=patrimonio+b1_45+b2_45;
+
+    /* guardar para el envío */
+    _informe={nombre,cedula,ingresos,hobbies,patrimonio,aporte1,aporte2,rent,rentPct,
+              fecha,hora,b1_20,b1_30,b1_45,b2_20,b2_30,b2_45,total};
+
+    /* poblar reporte visual */
+    document.getElementById('rpt-nombre').textContent=nombre;
+    document.getElementById('rpt-nombre-small').textContent=nombre;
+    document.getElementById('rpt-fecha').textContent=fecha+"  "+hora;
+    document.getElementById('rpt-cedula').textContent="C.C. "+cedula;
+    var filas=[
+      ["Ingresos Mensuales (Raíces)",cop(ingresos)],
+      ["Patrimonio Actual (Matas)",cop(patrimonio)],
+      ["Actividades y Estilo de Vida (Tronco)",hobbies||"No especificado"],
+      ["Aporte mensual Bolsillo I",cop(aporte1)],
+      ["Aporte mensual Bolsillo II",cop(aporte2)],
+      ["Rentabilidad anual SP500/ETF",rentPct+"%"]
+    ];
+    document.getElementById('rpt-info-rows').innerHTML=filas
+      .map(function(f){return'<div class="info-row"><span class="info-label">'+f[0]+'</span><span class="info-value">'+f[1]+'</span></div>';}).join('');
+    document.getElementById('b2-label-title').textContent="Tasa anual esperada: "+rentPct+"%";
+    ['b1-20','b1-30','b1-45','b2-20','b2-30','b2-45'].forEach(function(id,i){
+      document.getElementById(id).textContent=cop([b1_20,b1_30,b1_45,b2_20,b2_30,b2_45][i]);
+    });
+    document.getElementById('rpt-total').textContent=cop(total);
+    document.getElementById('reporte-container').style.display='block';
+    document.getElementById('btn-enviar').style.display='flex';
+    document.getElementById('reporte-container').scrollIntoView({behavior:'smooth',block:'start'});
+    mostrarNotice("✅ Informe generado. Presiona <strong>Enviar por Correo</strong> para mandarlo a tu Gmail.","success");
+  }
+
+  /* ═══════════════════════════════════════════════
+     2.  CONSTRUIR HTML DEL CORREO (mismo diseño)
+  ═══════════════════════════════════════════════ */
+  function construirHtmlCorreo(d){
+    return '<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"/>'+
+    '<style>'+
+    '@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap");'+
+    'body{margin:0;padding:0;background:#f6f2eb;font-family:Montserrat,Arial,sans-serif;}'+
+    '.wrap{max-width:680px;margin:32px auto;background:#ffffff;border:1px solid rgba(201,168,76,.3);border-radius:6px;overflow:hidden;box-shadow:0 8px 32px rgba(10,22,40,.1);}'+
+    /* header */
+    '.hdr{background:#0a1628;padding:36px 44px;position:relative;border-bottom:3px solid #c9a84c;}'+
+    '.hdr-inner{display:flex;justify-content:space-between;align-items:flex-start;}'+
+    '.hdr-logo{display:flex;align-items:center;gap:14px;}'+
+    '.badge{width:46px;height:46px;border:2px solid #c9a84c;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#122040;flex-shrink:0;}'+
+    '.badge-text{color:#c9a84c;font-size:18px;font-weight:700;line-height:1;}'+
+    '.brand h1{font-size:20px;font-weight:600;color:#ffffff;letter-spacing:.04em;margin:0;}'+
+    '.brand p{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:#c9a84c;margin:3px 0 0;}'+
+    '.hdr-right{text-align:right;}'+
+    '.hdr-right .lbl{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);}'+
+    '.hdr-right .val{font-size:13px;color:#e8c97a;display:block;margin-top:3px;}'+
+    '.client-name{margin-top:20px;font-size:24px;font-weight:600;color:#ffffff;letter-spacing:.02em;}'+
+    '.client-sub{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#c9a84c;margin-top:5px;}'+
+    /* body */
+    '.body{padding:40px 44px;}'+
+    '.sec-title{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#0a1628;padding-bottom:8px;border-bottom:2px solid #c9a84c;margin:32px 0 16px;display:flex;align-items:center;gap:8px;}'+
+    '.sec-title::before{content:"";display:inline-block;width:10px;height:2px;background:#c9a84c;}'+
+    'table{width:100%;border-collapse:collapse;}'+
+    'td{padding:10px 4px;font-size:13px;border-bottom:1px solid #f0ece4;}'+
+    '.td-lbl{color:#6b7280;font-weight:400;}'+
+    '.td-val{font-weight:600;color:#0a1628;text-align:right;}'+
+    /* proj table */
+    '.proj-hdr td{background:#f6f2eb;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0a1628;border-bottom:2px solid #c9a84c;}'+
+    '.proj-hdr td:not(:first-child){text-align:right;}'+
+    '.proj-row td:not(:first-child){text-align:right;}'+
+    /* total box */
+    '.total-box{background:linear-gradient(135deg,#122040,#0a1628);border-radius:6px;padding:28px 32px;margin-top:28px;border:1px solid #c9a84c;}'+
+    '.total-inner{display:flex;justify-content:space-between;align-items:center;}'+
+    '.total-lbl{color:rgba(255,255,255,.5);font-size:10px;letter-spacing:.1em;text-transform:uppercase;}'+
+    '.total-name{color:#ffffff;font-size:16px;font-weight:600;display:block;margin-top:5px;letter-spacing:.02em;}'+
+    '.total-val{color:#e8c97a;font-size:28px;font-weight:700;text-align:right;}'+
+    /* footer */
+    '.footer{margin-top:32px;padding-top:20px;border-top:1px solid rgba(201,168,76,.2);font-size:10px;color:#9ca3af;line-height:1.8;}'+
+    '.sig{margin-top:24px;text-align:right;}'+
+    '.sig .sig-name{font-size:13px;font-weight:700;color:#0a1628;}'+
+    '.sig .sig-role{font-size:10px;color:#6b7280;letter-spacing:.08em;text-transform:uppercase;display:block;margin-top:3px;}'+
+    '</style></head><body>'+
+    '<div class="wrap">'+
+      '<div class="hdr">'+
+        '<div class="hdr-inner">'+
+          '<div class="hdr-logo">'+
+            '<div class="badge"><span class="badge-text">M</span></div>'+
+            '<div class="brand"><h1>MetLife</h1><p>Protección · Patrimonio · Futuro</p></div>'+
+          '</div>'+
+          '<div class="hdr-right">'+
+            '<span class="lbl">Fecha de emisión</span><span class="val">'+d.fecha+'&nbsp;&nbsp;'+d.hora+'</span>'+
+            '<span class="lbl" style="margin-top:10px;display:block;">Documento de referencia</span><span class="val">C.C. '+d.cedula+'</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="client-name">'+d.nombre+'</div>'+
+        '<div class="client-sub">Informe de Proyección Patrimonial · MetLife Colombia</div>'+
+      '</div>'+
+      '<div class="body">'+
+        /* perfil */
+        '<div class="sec-title">Perfil Financiero del Cliente</div>'+
+        '<table>'+
+          '<tr><td class="td-lbl">Ingresos Mensuales (Raíces)</td><td class="td-val">'+cop(d.ingresos)+'</td></tr>'+
+          '<tr><td class="td-lbl">Patrimonio Actual (Matas)</td><td class="td-val">'+cop(d.patrimonio)+'</td></tr>'+
+          '<tr><td class="td-lbl">Actividades y Estilo de Vida</td><td class="td-val">'+( d.hobbies||'No especificado')+'</td></tr>'+
+          '<tr><td class="td-lbl">Aporte mensual Bolsillo I</td><td class="td-val">'+cop(d.aporte1)+'</td></tr>'+
+          '<tr><td class="td-lbl">Aporte mensual Bolsillo II</td><td class="td-val">'+cop(d.aporte2)+'</td></tr>'+
+          '<tr><td class="td-lbl">Rentabilidad anual SP500/ETF</td><td class="td-val">'+d.rentPct+'%</td></tr>'+
+        '</table>'+
+        /* proyecciones */
+        '<div class="sec-title">Proyecciones de Inversión</div>'+
+        '<table>'+
+          '<tr class="proj-hdr"><td>Horizonte</td><td>Bolsillo I (8% fija)</td><td>Bolsillo II ('+d.rentPct+'%)</td></tr>'+
+          '<tr class="proj-row"><td class="td-lbl">A 20 años</td><td class="td-val">'+cop(d.b1_20)+'</td><td class="td-val">'+cop(d.b2_20)+'</td></tr>'+
+          '<tr class="proj-row"><td class="td-lbl">A 30 años</td><td class="td-val">'+cop(d.b1_30)+'</td><td class="td-val">'+cop(d.b2_30)+'</td></tr>'+
+          '<tr class="proj-row"><td class="td-lbl">A 45 años</td><td class="td-val">'+cop(d.b1_45)+'</td><td class="td-val">'+cop(d.b2_45)+'</td></tr>'+
+        '</table>'+
+        /* total */
+        '<div class="total-box">'+
+          '<div class="total-inner">'+
+            '<div><span class="total-lbl">Patrimonio Total Estimado a los 62 Años</span><span class="total-name">'+d.nombre+'</span></div>'+
+            '<div class="total-val">'+cop(d.total)+'</div>'+
+          '</div>'+
+        '</div>'+
+        /* footer */
+        '<div class="footer">'+
+          '<strong style="color:#374151;">Aviso Legal:</strong> Los valores presentados son proyecciones estimativas con fines ilustrativos y no constituyen una garantía de rendimiento futuro. '+
+          'Las rentabilidades históricas no garantizan resultados futuros. Este documento fue elaborado por Martín Gómez, Protector de Patrimonio certificado por MetLife Colombia, '+
+          'con base en los datos suministrados por el cliente. Para más información comuníquese con su asesor.'+
+        '</div>'+
+        '<div class="sig">'+
+          '<span class="sig-name">Martín Gómez</span>'+
+          '<span class="sig-role">Protector de Patrimonio · MetLife Colombia</span>'+
+          '<span class="sig-role" style="margin-top:2px;">martingomez9915@gmail.com</span>'+
+        '</div>'+
+      '</div>'+
+    '</div>'+
+    '</body></html>';
+  }
+
+  /* ═══════════════════════════════════════════════
+     3.  ENVIAR — copiar HTML al portapapeles + abrir Gmail
+  ═══════════════════════════════════════════════ */
+  async function enviarCorreo(){
+    if(!_informe){ mostrarNotice("Primero genera el informe.","error"); return; }
+    var d=_informe;
+    var htmlEmail=construirHtmlCorreo(d);
+    var asunto="Informe MetLife — "+d.nombre+" | C.C. "+d.cedula+" | "+d.fecha;
+    var destinatario="martingomez9915@gmail.com";
+
+    /* intentar copiar como HTML rico al portapapeles */
+    var copiado=false;
+    try{
+      var blob=new Blob([htmlEmail],{type:'text/html'});
+      var item=new ClipboardItem({'text/html':blob,'text/plain':new Blob([d.nombre],{type:'text/plain'})});
+      await navigator.clipboard.write([item]);
+      copiado=true;
+    }catch(e){ copiado=false; }
+
+    /* abrir Gmail compose */
+    var gmailURL="https://mail.google.com/mail/?view=cm&fs=1"+
+      "&to="+encodeURIComponent(destinatario)+
+      "&su="+encodeURIComponent(asunto);
+    var ventana=window.open(gmailURL,'_blank');
+
+    /* instrucciones al usuario */
+    var el=document.getElementById('notice');
+    if(copiado && ventana){
+      el.className="notice success";
+      el.innerHTML=
+        '<strong>✅ ¡Gmail abierto y el informe está copiado!</strong>'+
+        '<ol style="margin-top:8px;padding-left:18px;line-height:2;">'+
+        '<li>En Gmail ya está el asunto y el destinatario.</li>'+
+        '<li>Haz clic dentro del <strong>cuerpo del correo</strong>.</li>'+
+        '<li>Presiona <strong>Ctrl+V</strong> (o Cmd+V en Mac) para pegar el informe con todo su diseño.</li>'+
+        '<li>Presiona <strong>Enviar</strong>.</li>'+
+        '</ol>';
+    } else if(!copiado && ventana){
+      el.className="notice info";
+      el.innerHTML=
+        '<strong>📬 Gmail está abierto.</strong> Tu navegador no permitió copiar automáticamente.<br>'+
+        'Haz clic en el botón de abajo para copiar el informe HTML y luego pégalo (Ctrl+V) en el cuerpo del correo en Gmail.'+
+        '<br/><br/><button onclick="copiarManual()" style="padding:8px 16px;background:#0a1628;color:#e8c97a;border:1px solid #c9a84c;border-radius:3px;cursor:pointer;font-size:11px;font-weight:600;letter-spacing:.1em;">📋 COPIAR INFORME</button>';
+    } else {
+      el.className="notice error";
+      el.innerHTML='⚠️ El navegador bloqueó la ventana. <a href="'+gmailURL+'" target="_blank" style="color:#8c1a1a;font-weight:700;">→ Abre Gmail aquí</a>, luego presiona "Copiar Informe".'+
+        '<br/><br/><button onclick="copiarManual()" style="padding:8px 16px;background:#0a1628;color:#e8c97a;border:1px solid #c9a84c;border-radius:3px;cursor:pointer;font-size:11px;font-weight:600;letter-spacing:.1em;">📋 COPIAR INFORME</button>';
+    }
+  }
+
+  async function copiarManual(){
+    if(!_informe) return;
+    try{
+      var htmlEmail=construirHtmlCorreo(_informe);
+      var blob=new Blob([htmlEmail],{type:'text/html'});
+      var item=new ClipboardItem({'text/html':blob});
+      await navigator.clipboard.write([item]);
+      alert("✅ ¡Informe copiado! Ahora pégalo (Ctrl+V) en el cuerpo del correo en Gmail.");
+    }catch(e){
+      alert("No se pudo copiar automáticamente. Por favor intenta desde Chrome o Edge.");
+    }
+  }
+
+  function mostrarNotice(msg,tipo){
+    var el=document.getElementById('notice');
+    el.innerHTML=msg; el.className="notice "+tipo;
+  }
+</script>
+</body>
+</html>
